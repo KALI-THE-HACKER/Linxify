@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "5658:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./logs/linxifylogs.log:/app/linxifylogs.log
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: linxify
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
